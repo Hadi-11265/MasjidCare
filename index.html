@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mosjid.css">
+    <title></title>
+</head>
+<body>
+    <div class="navbar">
+    <div class="name">
+      <h1 class="Mosjidname">গৌরসার কেন্দ্রীয় জামে মসজিদ</h1>
+    </div>
+    </div>
+    
+    <script>
+    // Check admin status on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        const isAdmin = localStorage.getItem('admin_logged_in') === 'true';
+
+        // সবসময় Admin Panel থাকবে
+        document.getElementById('admin-btn-text').textContent = 'Admin Panel';
+    });
+    
+    function handleAdminClick() {
+        const isAdmin = localStorage.getItem('admin_logged_in') === 'true';
+        
+        if (isAdmin) {
+            if (confirm('আপনি কি লগআউট করতে চান?')) {
+                localStorage.removeItem('admin_logged_in');
+                localStorage.removeItem('adminData');
+                window.location.href = 'admin_logout.php';
+            }
+        } else {
+            window.location.href = 'admin.html';
+        }
+    }
+</script>
+
+      
+    <div class="container1">
+        <div  class="contain1">
+         <div class="time-heading"> 
+            <h2>জামাত শুরু হবার সময় </h2>
+         </div>
+            <div class="prayer-time-row">
+                <div class="time-left">
+                    <div class="label1">ফজর </div>
+                </div>
+
+                <div class="time-value">04:28 AM</div>
+            </div>
+              <div class="prayer-time-row">
+                    <div class="time-left">
+                        <div class="label2">জোহর</div>
+                    </div>
+             <div class="time-value">04:28 AM</div>
+            </div>
+
+            <div class="prayer-time-row">
+                    <div class="time-left">
+                        <div class="label1">আসর</div>
+                    </div>
+             <div class="time-value">04:28 AM</div>
+            </div>
+            <div class="prayer-time-row">
+                    <div class="time-left">
+                        <div class="label2">মাগরিব</div>
+                    </div>
+             <div class="time-value">04:28 AM</div>
+            </div>
+            <div class="prayer-time-row">
+                    <div class="time-left">
+                        <div class="label1">এশা</div>
+                    </div>
+             <div class="time-value">04:28 AM</div>
+            </div>
+        </div>
+
+
+
+         <div  class="contain2">
+           <div class="time-heading"> 
+            <h2>নামাজের নিষিদ্ধ সময় </h2>
+         </div>
+            <div class="forbidden-time-row">
+                <div class="time-left">
+                    <div class="label1">সকাল</div>
+                </div>
+
+                <div class="time-value">05:57 AM  -  06:12 AM</div>
+            </div>
+              <div class="forbidden-time-row">
+                    <div class="time-left">
+                        <div class="label2">দুপুর</div>
+                    </div>
+             <div class="time-value">11:28 AM - 11:42 AM </div>
+            </div>
+
+            <div class="forbidden-time-row">
+                    <div class="time-left">
+                        <div class="label1">সন্ধা</div>
+                    </div>
+             <div class="time-value">05:14  PM - 5:28 PM</div>
+            </div>
+        </div>
+    </div>
+
+
+     <div class="container2">
+        <div  class="contain3">
+         <div class="time-heading"> 
+            <h2>অনলাইন লাইব্রেরি</h2>
+         </div>
+            <div class="library-row-1">
+                <div class="sub-div1">
+                 <div onclick="window.location.href='alQuran.html'" >আল কোরআন</div>
+                </div>
+
+                <div class="sub-div2">
+                  <div onclick="window.location.href='Hadisgrontho.html'">হাদিস গ্রন্থ</div>
+                </div>
+            </div>
+
+            <div class="library-row-2">
+                <div class="sub-div3">
+                    <div>ইসলামিক বই</div>
+                </div>
+
+                <div class="sub-div4">
+                    <div>দোয়ার বই</div>
+                </div>
+            </div>
+        </div>
+
+
+
+         <div  class="contain4">
+            <div class="time-heading"> 
+              <h2>আসন্ন ইসলামিক ইভেন্ট</h2>
+            </div>
+            <div class="time-row3">
+                <div class="time-left">
+                    <div class="label2">রমাদান</div>
+                </div>
+
+                <div class="time-value">18 Feb 2026</div>
+            </div>
+
+              <div class="time-row3">
+                <div class="time-left">
+                    <div class="label1">লাইলাতুলকদর</div>
+                </div>
+
+                <div class="time-value">16 Mar 2026</div>
+            </div>
+
+
+            <div class="time-row3">
+                <div class="time-left">
+                    <div class="label1">ঈদুল ফিতর</div>
+                </div>
+
+                <div class="time-value">20 Mar 2026</div>
+            </div>
+
+            <div class="time-row3">
+                <div class="time-left">
+                    <div class="label2">ঈদুল আজহা</div>
+                </div>
+
+                <div class="time-value">27 May 2026</div>
+            </div>
+
+
+             <div class="time-row4">
+                <div class="time-left">
+                    <div class="label1">সম্ভাব্য তারিখ চাঁদ দেখার উপর নির্ভরশীল।</div>
+                </div>
+
+                </div>
+
+            
+        </div>
+    </div>
+
+    <div class="container3">
+        <div onclick="window.location.href='finance.html'" class="contain7-8">
+            <div class="sub-div5">
+                <div>আয় - ব্যয় দেখুন</div>
+            </div>
+        </div>
+
+        <div onclick="window.location.href='donate.html'"  class="contain9">
+          Donation
+        </div>
+
+        <div id="admin-container" onclick="handleAdminClick()" class="contain10">
+            <span id="admin-btn-text">Admin Panel</span>
+        </div>
+    </div>
+    
+</body>
+</html>

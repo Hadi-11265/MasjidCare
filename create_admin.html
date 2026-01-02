@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="create_admin.css">
+</head>
+<body>
+    <div class="home-btn" onclick="window.location.href='index.html'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        Home
+    </div>
+    <div class="admin-page">
+       <div>
+           <h1 class="H1">Sign Up</h1>
+           <form id="register-form" onsubmit="handleRegister(event)">
+            <label>Name :</label> <br>
+            <input type="text" id="name" name="name" placeholder="Name" required> <br>
+            <label>Age :</label> <br>
+            <input type="number" id="age" name="age" placeholder="Age" required min="18" max="100"> <br>
+            <label>Holding Number :</label> <br>
+            <input type="text" id="holding_number" name="holding_number" placeholder="Holding number"> <br>
+            <label>Phone number :</label> <br>
+            <input type="text" id="phone" name="phone" placeholder="01XXXXXXXXX" required pattern="01[0-9]{9}"> <br>
+            <label>Password :</label> <br>
+            <input type="password" id="password" name="password" placeholder="Password (min 6 characters)" required minlength="6"> <br>
+             <button type="submit">Submit</button>
+              <h4 onclick="window.location.href='admin.html'">Log in</h4>
+           </form>
+           <p id="message" style="text-align: center; margin-top: 10px; display: none;"></p>
+       </div>
+    </div>
+    
+    <script>
+        async function handleRegister(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const message = document.getElementById('message');
+            
+            try {
+                const response = await fetch('admin_register.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    message.textContent = result.message;
+                    message.style.color = 'green';
+                    message.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        window.location.href = result.redirect || 'admin.html';
+                    }, 1500);
+                } else {
+                    message.textContent = result.message;
+                    message.style.color = 'red';
+                    message.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                message.textContent = 'Registration failed. Please try again.';
+                message.style.color = 'red';
+                message.style.display = 'block';
+            }
+        }
+    </script>
+    
+</body>
+</html>

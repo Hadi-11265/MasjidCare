@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আয়-ব্যয় ব্যবস্থাপনা</title>
+    <link rel="stylesheet" href="finance.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-content">
+            <h1>আয়-ব্যয় ব্যবস্থাপনা</h1>
+            <div class="nav-actions">
+                <span id="admin-status" class="admin-badge" style="display: none;"></span>
+                <button id="logout-btn" onclick="handleLogout()" class="logout-btn" style="display: none;">Logout</button>
+                <button onclick="window.location.href='index.html'" class="back-btn">← হোমে ফিরুন</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Summary Cards -->
+        <div class="summary-section">
+            <div class="summary-card income-card">
+                <div class="card-icon">📈</div>
+                <div class="card-content">
+                    <h3>মোট আয়</h3>
+                    <p class="amount" id="total-income">০ ৳</p>
+                    <span class="period" id="income-period">এই মাসে</span>
+                </div>
+            </div>
+
+            <div class="summary-card expense-card">
+                <div class="card-icon">📉</div>
+                <div class="card-content">
+                    <h3>মোট ব্যয়</h3>
+                    <p class="amount" id="total-expense">০ ৳</p>
+                    <span class="period" id="expense-period">এই মাসে</span>
+                </div>
+            </div>
+
+            <div class="summary-card balance-card">
+                <div class="card-icon">💰</div>
+                <div class="card-content">
+                    <h3>উদ্বৃত্ত</h3>
+                    <p class="amount" id="balance">০ ৳</p>
+                    <span class="period">আয় - ব্যয়</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <h2>ফিল্টার করুন</h2>
+            <div class="filter-controls">
+                <select id="month-filter">
+                    <option value="">সব মাস</option>
+                    <option value="01">জানুয়ারি</option>
+                    <option value="02">ফেব্রুয়ারি</option>
+                    <option value="03">মার্চ</option>
+                    <option value="04">এপ্রিল</option>
+                    <option value="05">মে</option>
+                    <option value="06">জুন</option>
+                    <option value="07">জুলাই</option>
+                    <option value="08">আগস্ট</option>
+                    <option value="09">সেপ্টেম্বর</option>
+                    <option value="10">অক্টোবর</option>
+                    <option value="11">নভেম্বর</option>
+                    <option value="12">ডিসেম্বর</option>
+                </select>
+
+                <select id="year-filter">
+                    <option value="">সব বছর</option>
+                    <option value="2025">২০২৫</option>
+                    <option value="2024">২০২৪</option>
+                    <option value="2023">২০২৩</option>
+                </select>
+
+                <button onclick="applyFilter()" class="filter-btn">ফিল্টার করুন</button>
+                <button onclick="resetFilter()" class="reset-btn">রিসেট</button>
+            </div>
+        </div>
+
+        <!-- Tabs for Income and Expense -->
+        <div class="tabs-section">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('income')">আয় দেখুন</button>
+                <button class="tab-btn" onclick="switchTab('expense')">ব্যয় দেখুন</button>
+            </div>
+
+            <!-- Income Section -->
+            <div id="income-section" class="tab-content active">
+                <div class="section-header">
+                    <h2>আয়ের তালিকা</h2>
+                    <button id="add-income-btn" onclick="openAddModal('income')" class="add-btn" style="display: none;">+ নতুন আয় যোগ করুন</button>
+                </div>
+
+                <div class="table-container">
+                    <table id="income-table">
+                        <thead>
+                            <tr>
+                                <th>তারিখ</th>
+                                <th>উৎস</th>
+                                <th>পরিমাণ (৳)</th>
+                                <th>বিবরণ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="income-tbody">
+                            <tr>
+                                <td colspan="4" class="loading">ডেটা লোড হচ্ছে...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="click-hint">বিস্তারিত দেখতে যেকোনো সারিতে ক্লিক করুন</p>
+            </div>
+
+            <!-- Expense Section -->
+            <div id="expense-section" class="tab-content">
+                <div class="section-header">
+                    <h2>ব্যয়ের তালিকা</h2>
+                    <button id="add-expense-btn" onclick="openAddModal('expense')" class="add-btn" style="display: none;">+ নতুন ব্যয় যোগ করুন</button>
+                </div>
+
+                <div class="table-container">
+                    <table id="expense-table">
+                        <thead>
+                            <tr>
+                                <th>তারিখ</th>
+                                <th>খাত</th>
+                                <th>পরিমাণ (৳)</th>
+                                <th>বিবরণ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expense-tbody">
+                            <tr>
+                                <td colspan="4" class="loading">ডেটা লোড হচ্ছে...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="click-hint">বিস্তারিত দেখতে যেকোনো সারিতে ক্লিক করুন</p>
+            </div>
+        </div>
+
+        <!-- Category Breakdown -->
+        <div class="breakdown-section">
+            <h2>খাত অনুযায়ী বিশ্লেষণ</h2>
+            
+            <div class="breakdown-tabs">
+                <button class="breakdown-tab-btn active" onclick="switchBreakdownTab('income')">আয়ের বিশ্লেষণ</button>
+                <button class="breakdown-tab-btn" onclick="switchBreakdownTab('expense')">ব্যয়ের বিশ্লেষণ</button>
+            </div>
+            
+            <div id="income-breakdown" class="breakdown-content active">
+                <div id="income-category-breakdown" class="breakdown-grid">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </div>
+            
+            <div id="expense-breakdown" class="breakdown-content">
+                <div id="expense-category-breakdown" class="breakdown-grid">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div id="detail-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeDetailModal()">&times;</span>
+            <h2 id="detail-title">বিস্তারিত তথ্য</h2>
+            
+            <div class="detail-body">
+                <div class="detail-row">
+                    <label>তারিখ:</label>
+                    <span id="detail-date">-</span>
+                </div>
+                <div class="detail-row">
+                    <label id="detail-label-source">উৎস:</label>
+                    <span id="detail-source">-</span>
+                </div>
+                <div class="detail-row">
+                    <label>পরিমাণ:</label>
+                    <span id="detail-amount">-</span>
+                </div>
+                <div class="detail-row">
+                    <label>বিবরণ:</label>
+                    <span id="detail-description">-</span>
+                </div>
+            </div>
+            
+            <div class="detail-actions">
+                <button onclick="closeDetailModal()" class="close-btn">বন্ধ করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div id="add-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddModal()">&times;</span>
+            <h2 id="modal-title">নতুন আয় যোগ করুন</h2>
+            
+            <form id="add-form" onsubmit="submitForm(event)">
+                <input type="hidden" id="form-type" value="">
+                
+                <div class="form-group">
+                    <label for="source">উৎস/খাত *</label>
+                    <input type="text" id="source" required placeholder="যেমন: জুমার দান, বিদ্যুৎ বিল">
+                </div>
+
+                <div class="form-group">
+                    <label for="amount">পরিমাণ (৳) *</label>
+                    <input type="number" id="amount" required min="1" step="0.01" placeholder="০">
+                </div>
+
+                <div class="form-group">
+                    <label for="date">তারিখ *</label>
+                    <input type="date" id="date" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" onclick="closeAddModal()" class="cancel-btn">বাতিল</button>
+                    <button type="submit" class="submit-btn">সংরক্ষণ করুন</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success/Error Message -->
+    <div id="toast" class="toast"></div>
+
+    <script src="finance.js"></script>
+    <script>
+        // Show logout button if admin is logged in
+        window.addEventListener('DOMContentLoaded', () => {
+            const isAdmin = localStorage.getItem('admin_logged_in') === 'true';
+            if (isAdmin) {
+                document.getElementById('logout-btn').style.display = 'block';
+            }
+        });
+
+        function handleLogout() {
+            if (confirm('আপনি কি লগআউট করতে চান?')) {
+                localStorage.removeItem('admin_logged_in');
+                localStorage.removeItem('admin_name');
+                window.location.href = 'admin_logout.php';
+            }
+        }
+    </script>
+</body>
+</html>

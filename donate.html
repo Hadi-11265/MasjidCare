@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation</title>
+    <link rel="stylesheet" href="donate.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app-container">
+
+        <h1>অনুদান প্রক্রিয়া</h1>
+
+        <div class="step-flow">
+            <div class="step-indicator">
+                <div id="step-1-circle" class="step-circle active">১</div>
+                <div id="connector-1-2" class="step-connector"></div>
+            </div>
+            <div class="step-indicator">
+                <div id="step-2-circle" class="step-circle">২</div>
+                <div id="connector-2-3" class="step-connector"></div>
+            </div>
+            <div class="step-indicator">
+                <div id="step-3-circle" class="step-circle">৩</div>
+            </div>
+        </div>
+
+        <div id="step-content-container">
+            
+            <div id="step-1-content" class="step-content">
+                <h2>ধাপ ১: অনুদানের ধরণ ও পরিমাণ নির্বাচন</h2>
+                <p class="text-muted">অনুগ্রহ করে অনুদানের ধরণ নির্বাচন করুন এবং আপনার পছন্দের পরিমাণ লিখুন।</p>
+
+                <div class="donation-grid">
+                    <div id="option-zakat" data-type="যাকাত" onclick="selectDonationType(this)" class="donation-option">
+                        <p>যাকাত</p>
+                    </div>
+                    <div id="option-masjid" data-type="মসজিদ" onclick="selectDonationType(this)" class="donation-option">
+                        <p>মসজিদ</p>
+                    </div>
+                    <div id="option-madrasha" data-type="মাদ্রাসা" onclick="selectDonationType(this)" class="donation-option">
+                        <p>মাদ্রাসা</p>
+                    </div>
+                    <div id="option-others" data-type="অন্যান্য" onclick="selectDonationType(this)" class="donation-option">
+                        <p>অন্যান্য</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="custom-amount">অনুদান পরিমাণ (BDT)</label>
+                    <input type="number" id="custom-amount" min="10" placeholder="যেমন: ৫০০ বা ১০০০">
+                    <p id="amount-error" class="error-message" style="display: none;">অনুগ্রহ করে অনুদানের ধরণ নির্বাচন করুন এবং একটি বৈধ পরিমাণ (কমপক্ষে ১০ BDT) লিখুন।</p>
+                </div>
+
+                <div class="button-right">
+                    <button id="next-step-1" onclick="nextStep()" class="btn btn-primary" disabled>
+                        পরবর্তী: পেমেন্ট যাচাই &rarr;
+                    </button>
+                </div>
+            </div>
+
+            <div id="step-2-content" class="step-content" style="display: none;">
+                <h2>ধাপ ২: পেমেন্ট পদ্ধতি নির্বাচন ও পিন যাচাই</h2>
+                
+                <div class="form-group">
+                    <label>পেমেন্ট পদ্ধতি নির্বাচন করুন</label>
+                    <div class="payment-method-grid">
+                        <div id="method-bkash" data-method="bKash" onclick="selectPaymentMethod(this)" class="method-option">
+                            <span class="bkash-logo">bKash</span>
+                            <p style="font-size: 0.875rem; margin-top: 0.5rem; color: #4b5563;">বিকাশ</p>
+                        </div>
+                        <div id="method-nagad" data-method="Nagad" onclick="selectPaymentMethod(this)" class="method-option">
+                            <span class="nagad-logo">NAGAD</span>
+                            <p style="font-size: 0.875rem; margin-top: 0.5rem; color: #4b5563;">নগদ</p>
+                        </div>
+                    </div>
+                    <p id="method-error" class="error-message" style="display: none;">অনুগ্রহ করে একটি পেমেন্ট পদ্ধতি নির্বাচন করুন।</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="mobile-number-input">মোবাইল নম্বর (১১ ডিজিট)</label>
+                    <input type="number" id="mobile-number-input" maxlength="11" placeholder="০১xxxxxxxxx">
+                    <p id="mobile-error" class="error-message" style="display: none;">মোবাইল নম্বরটি অবশ্যই ১১-সংখ্যার হতে হবে।</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="verification-pin">৫-সংখ্যার পিন</label>
+                    <input type="number" id="verification-pin" maxlength="5" placeholder="৫-সংখ্যার পিন লিখুন" style="text-align: center;">
+                    <p id="pin-error" class="error-message" style="display: none;">পিনটি অবশ্যই ৫-সংখ্যার হতে হবে।</p>
+                </div>
+                
+                <div class="button-group">
+                    <button onclick="prevStep()" class="btn btn-secondary">
+                        &larr; পিছনে
+                    </button>
+                    <button id="next-step-2" onclick="nextStep()" class="btn btn-primary" disabled>
+                        অর্থ প্রদান নিশ্চিত করুন ও পরবর্তী ধাপ &rarr;
+                    </button>
+                </div>
+            </div>
+
+            <div id="step-3-content" class="step-content" style="display: none;">
+                <h2>ধাপ ৩: লেনদেন ইতিহাস</h2>
+                <p class="text-muted">আপনার অনুদানটি সফলভাবে নিশ্চিত **এবং ডেটাবেসে সংরক্ষণের জন্য প্রস্তুত** হয়েছে। নিচে লেনদেনটির সম্পূর্ণ ইতিহাস দেখুন।</p>
+
+                <div class="summary-box">
+                    <div class="summary-status">
+                        <h3 style="font-size: 1.125rem; font-weight: bold; color: #1f2937; margin: 0;">
+                            অনুদান সারাংশ ও ইতিহাস
+                        </h3>
+                        <span id="status-badge" class="badge badge-completed">সম্পূর্ণ</span>
+                    </div>
+                    <div class="summary-content">
+                        <p><strong>অনুদান ধরণ:</strong> <span id="final-type"></span></p>
+                        <p><strong>পরিমাণ:</strong> <span id="final-amount" style="font-weight: bold; font-size: 1.125rem; color: var(--primary-color);"></span></p>
+                        <p><strong>পেমেন্ট পদ্ধতি:</strong> <span id="final-method"></span></p>
+                        <p><strong>মোবাইল নম্বর:</strong> <span id="final-mobile"></span></p>
+                        <p><strong>লেনদেন আইডি:</strong> <span id="final-generated-id" style="font-family: monospace; font-size: 0.95rem; color: var(--primary-color); font-weight: 700;">N/A</span></p>
+                        <p><strong>লেনদেনের সময়:</strong> <span id="final-timestamp">N/A</span></p>
+                    </div>
+                </div>
+
+                <div id="success-message" class="success-box" style="display: block; margin-top: 1rem;">
+                    <svg class="success-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h4 style="color: #065f46;">অনুদান সফলভাবে সম্পন্ন!</h4>
+                    <p style="color: var(--primary-color);">আপনার উদার অবদানের জন্য ধন্যবাদ। আপনার সহযোগিতা পরিবর্তন আনবে।</p>
+                </div>
+
+                <div class="button-group" style="margin-top: 2rem;">
+                    <a href="index.html" class="btn btn-primary" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">
+                        &larr; হোম পেজে ফিরে যান
+                    </a>
+                    
+                    <button type="button" onclick="resetApp()" class="btn btn-secondary">
+                        নতুন অনুদান শুরু করুন
+                    </button>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+    <div id="message-modal" style="display: none;">
+        <div class="modal-content">
+            <h3 id="modal-title" style="font-size: 1.125rem; font-weight: bold; color: #1f2937; margin-bottom: 0.75rem;"></h3>
+            <p id="modal-body" style="color: #4b5563; margin-bottom: 1rem;"></p>
+            <div class="modal-footer">
+                <button onclick="closeModal()">
+                    ঠিক আছে
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- GLOBAL STATE ---
+        let appState = {
+            currentStep: 1, 
+            transactionData: {
+                donationType: '',
+                amount: 0,
+                paymentMethod: '', 
+                mobileNumber: '', 
+                pinVerified: false,
+                transactionId: '',
+                timestamp: null,
+                status: 'Draft', // Possible states: 'Draft', 'Completed'
+            }
+        };
+
+        // --- UTILITY FUNCTIONS ---
+        const generateTxnId = () => {
+             // Generates a simple mock transaction ID
+            return `TXN-${Math.random().toString(36).substring(2, 11).toUpperCase()}`;
+        };
+        
+        // --- MODAL FUNCTIONS ---
+        window.showModal = (title, body) => {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-body').innerHTML = body;
+            document.getElementById('message-modal').style.display = 'flex';
+        };
+
+        window.closeModal = () => {
+            document.getElementById('message-modal').style.display = 'none';
+        };
+
+        // --- UI RENDER FUNCTION ---
+        window.updateUI = () => {
+            const step = appState.currentStep;
+            const steps = [1, 2, 3];
+            const data = appState.transactionData;
+
+            // 1. Update Step Indicators
+            steps.forEach(s => {
+                const circle = document.getElementById(`step-${s}-circle`);
+                const connector = document.getElementById(`connector-${s}-${s + 1}`);
+                const isActive = s === step;
+                const isCompleted = s < step;
+
+                circle.classList.toggle('active', isActive);
+                circle.classList.remove('step-circle-completed');
+                
+                // Set colors based on state
+                if (isActive) {
+                    circle.style.backgroundColor = 'var(--primary-color)';
+                } else if (isCompleted) {
+                    // Note: 'step-circle-completed' class should be defined in CSS
+                    circle.classList.add('step-circle-completed');
+                    circle.style.backgroundColor = 'var(--success-color, #047857)'; 
+                } else {
+                    circle.style.backgroundColor = '#d1d5db';
+                }
+
+                if (connector) {
+                    connector.classList.toggle('completed', isCompleted || isActive);
+                }
+
+                // 2. Display correct step content
+                const content = document.getElementById(`step-${s}-content`);
+                if (content) {
+                    content.style.display = s === step ? 'block' : 'none';
+                }
+            });
+
+            // 3. Update data displays and input states
+            
+            // Step 1: 
+            document.querySelectorAll('#step-1-content .donation-option').forEach(el => {
+                el.classList.remove('selected');
+                if (el.dataset.type === data.donationType) {
+                    el.classList.add('selected');
+                }
+            });
+            document.getElementById('custom-amount').value = data.amount > 0 ? data.amount : '';
+            document.getElementById('next-step-1').disabled = !(data.donationType && data.amount >= 10);
+
+
+            // Step 2: 
+            document.getElementById('next-step-2').disabled = !data.pinVerified; 
+            document.querySelectorAll('#step-2-content .method-option').forEach(el => {
+                el.classList.remove('selected');
+                if (el.dataset.method === data.paymentMethod) {
+                    el.classList.add('selected');
+                }
+            });
+            document.getElementById('mobile-number-input').value = data.mobileNumber;
+            // Clear PIN input when updating UI for visual clarity
+            if (step !== 2) {
+                 document.getElementById('verification-pin').value = '';
+            }
+
+            // Step 3: Finalization & History
+            if (data.status === 'Completed') {
+                document.getElementById('final-type').textContent = data.donationType || 'N/A';
+                document.getElementById('final-amount').textContent = data.amount ? `${data.amount} BDT` : 'N/A';
+                document.getElementById('final-method').textContent = data.paymentMethod || 'N/A';
+                document.getElementById('final-mobile').textContent = data.mobileNumber || 'N/A';
+                document.getElementById('final-generated-id').textContent = data.transactionId || 'N/A';
+                document.getElementById('final-timestamp').textContent = data.timestamp ? new Date(data.timestamp).toLocaleString('bn-BD') : 'N/A';
+            }
+        };
+
+
+        // --- STEP 1 LOGIC ---
+        window.selectDonationType = (element) => {
+            document.querySelectorAll('#step-1-content .donation-option').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            appState.transactionData.donationType = element.dataset.type;
+            const amount = parseFloat(document.getElementById('custom-amount').value) || 0;
+            
+            document.getElementById('next-step-1').disabled = !(amount >= 10);
+            if (document.getElementById('next-step-1').disabled) {
+                document.getElementById('amount-error').style.display = 'block';
+            } else {
+                 document.getElementById('amount-error').style.display = 'none';
+            }
+        };
+
+        document.getElementById('custom-amount').addEventListener('input', (e) => {
+            const amount = parseFloat(e.target.value);
+            appState.transactionData.amount = amount;
+            
+            const isTypeSelected = !!appState.transactionData.donationType;
+
+            if (isTypeSelected && amount >= 10) {
+                document.getElementById('next-step-1').disabled = false;
+                document.getElementById('amount-error').style.display = 'none';
+            } else {
+                document.getElementById('next-step-1').disabled = true;
+                document.getElementById('amount-error').style.display = 'block';
+                document.getElementById('amount-error').textContent = 'অনুগ্রহ করে অনুদানের ধরণ নির্বাচন করুন এবং একটি বৈধ পরিমাণ (কমপক্ষে ১০ BDT) লিখুন।';
+            }
+        });
+
+
+        // --- STEP 2 LOGIC (Validation) ---
+        
+        window.checkStep2Validity = () => {
+            const data = appState.transactionData;
+            const pinInput = document.getElementById('verification-pin');
+            const enteredPin = pinInput.value.trim();
+            const mobileInput = document.getElementById('mobile-number-input');
+            const enteredMobile = mobileInput.value.trim();
+            
+            // Reset errors
+            document.getElementById('method-error').style.display = 'none';
+            document.getElementById('mobile-error').style.display = 'none';
+            document.getElementById('pin-error').style.display = 'none';
+            document.getElementById('pin-error').style.color = 'red'; 
+
+            let allValid = true;
+
+            // Check 1: Payment Method 
+            if (!data.paymentMethod) { 
+                document.getElementById('method-error').style.display = 'block';
+                document.getElementById('method-error').textContent = 'অনুগ্রহ করে একটি পেমেন্ট পদ্ধতি নির্বাচন করুন।';
+                allValid = false; 
+            }
+            
+            // Check 2: Mobile Number
+            if (enteredMobile.length !== 11 || !/^\d{11}$/.test(enteredMobile)) {
+                 if (enteredMobile.length > 0) {
+                     document.getElementById('mobile-error').style.display = 'block';
+                     document.getElementById('mobile-error').textContent = 'মোবাইল নম্বরটি অবশ্যই ১১-সংখ্যার হতে হবে।';
+                 }
+                allValid = false;
+            }
+            
+            // Check 3: PIN
+            if (enteredPin.length !== 5 || !/^\d+$/.test(enteredPin)) {
+                if (enteredPin.length > 0) {
+                    document.getElementById('pin-error').style.display = 'block';
+                    document.getElementById('pin-error').textContent = 'পিনটি অবশ্যই ৫-সংখ্যার হতে হবে।';
+                }
+                allValid = false;
+            } 
+            
+            // Final check and UI update
+            appState.transactionData.pinVerified = allValid;
+            document.getElementById('next-step-2').disabled = !allValid;
+            
+            if (allValid) {
+                 document.getElementById('pin-error').style.display = 'block';
+                 document.getElementById('pin-error').textContent = 'পিন যাচাইকরণ সফল।';
+                 document.getElementById('pin-error').style.color = 'green';
+            }
+        };
+
+
+        window.selectPaymentMethod = (element) => {
+            document.querySelectorAll('#step-2-content .method-option').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            appState.transactionData.paymentMethod = element.dataset.method;
+            window.checkStep2Validity();
+        };
+
+        document.getElementById('mobile-number-input').addEventListener('input', (e) => {
+            let number = e.target.value.trim();
+            number = number.replace(/\D/g, '').substring(0, 11); 
+            e.target.value = number;
+            appState.transactionData.mobileNumber = number;
+            window.checkStep2Validity();
+        });
+
+        document.getElementById('verification-pin').addEventListener('input', (e) => {
+            let pin = e.target.value.trim();
+            pin = pin.replace(/\D/g, '').substring(0, 5);
+            e.target.value = pin;
+            window.checkStep2Validity();
+        });
+
+          // --- DATABASE SAVE FUNCTION (ASYNC FETCH) ---
+          window.saveDonationToDatabase = async () => {
+          const data = appState.transactionData;
+    
+    // 1. Generate Mock Transaction ID and Timestamp
+    const txnId = generateTxnId();
+    const currentTime = new Date().toISOString();
+
+    // 2. Prepare data for server
+    const postData = new URLSearchParams();
+    postData.append('donation_type', data.donationType);
+    postData.append('amount', data.amount);
+    postData.append('payment_method', data.paymentMethod);
+    postData.append('mobile_number', data.mobileNumber);
+    postData.append('transaction_id', txnId);
+    postData.append('timestamp', currentTime); 
+    
+    let success = false;
+    let message = "ডেটা সংরক্ষণে ব্যর্থ।";
+    const formattedTime = new Date(currentTime).toLocaleTimeString('bn-BD');
+
+    try {
+        const response = await fetch('donation.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: postData,
+        });
+
+        if (response.ok) {
+            // যদি HTTP 200 হয়, তবে JSON পার্স করার চেষ্টা করুন
+            try {
+                const result = await response.json(); 
+                
+                if (result.success) {
+                    success = true;
+                    message = `আপনার পিন যাচাই ও <strong>${data.amount} BDT</strong> অনুদান সফলভাবে নিশ্চিত হয়েছে।<br>লেনদেন আইডি: <strong>${txnId}</strong> (সময়: ${formattedTime})<br><br><em style="font-size:0.9rem;">এই তথ্যটি সফলভাবে সার্ভারে সংরক্ষিত হয়েছে।</em>`;
+                    
+                    data.transactionId = txnId;
+                    data.status = 'Completed';
+                    data.timestamp = currentTime; 
+                    
+                } else {
+                    // PHP থেকে আসা এরর বার্তা (যেমন: Database Connection Failed)
+                    message = `সংরক্ষণ ব্যর্থ (PHP এরর): <strong>${result.message || 'ডেটা সংরক্ষণে সমস্যা হয়েছে।'}</strong><br><br>দয়া করে Apache, MySQL ও ডেটাবেস ক্রেডেনশিয়াল পরীক্ষা করুন।`;
+                }
+            } catch (jsonError) {
+                // যদি response.ok হয়, কিন্তু PHP কোনো বৈধ JSON না দেয় (যেমন: PHP Fatal Error)
+                const textError = await response.text();
+                console.error("JSON Parsing Failed, raw response:", textError);
+                message = `সার্ভার সাড়া দিয়েছে (HTTP 200), কিন্তু অপ্রত্যাশিত প্রতিক্রিয়া দিয়েছে। সম্ভবত PHP কোডে Fatal Error আছে। <br>প্রথম ২০ অক্ষর: <strong>${textError.substring(0, 20)}...</strong>`;
+            }
+
+        } else {
+            // HTTP এরর (405, 500, etc.)
+            message = `সার্ভার সংযোগ ত্রুটি: (HTTP ${response.status})। **Method Not Allowed (405)** বা **Internal Server Error (500)**।<br><br>সম্ভাব্য কারণ: Apache কনফিগারেশন সমস্যা।`;
+        }
+    } catch (error) {
+        console.error("Fetch/Network Error:", error);
+        message = `নেটওয়ার্ক ত্রুটি: ডেটা সার্ভারে পাঠানো যায়নি। ${error.message}`;
+    }
+    
+    // Show success/error modal 
+    window.showModal(
+        success ? "অর্থ প্রদান ও নিশ্চিতকরণ সফল" : "সংরক্ষণ ব্যর্থ", 
+        message
+    );
+    
+    return success;
+};
+
+
+        // --- NAVIGATION LOGIC ---
+        window.nextStep = async () => {
+            const currentStep = appState.currentStep;
+            const data = appState.transactionData;
+
+            if (currentStep === 1) {
+                // Validation for Step 1
+                if (!data.donationType || data.amount < 10) return;
+            
+            } else if (currentStep === 2) {
+                // Validation for Step 2
+                window.checkStep2Validity(); 
+                if (!data.pinVerified) return; 
+                
+                // Perform database save and wait for completion/failure
+                const isSaved = await window.saveDonationToDatabase(); 
+                
+                if (!isSaved) return; // Stop if server save failed
+            }
+
+            if (currentStep < 3) {
+                appState.currentStep += 1;
+                window.updateUI();
+            }
+        };
+
+        window.prevStep = () => {
+            if (appState.currentStep > 1) {
+                // If moving back from Step 3, reset completion status
+                if (appState.currentStep === 3) {
+                    appState.transactionData.status = 'Draft';
+                    appState.transactionData.transactionId = '';
+                    appState.transactionData.timestamp = null;
+                }
+                appState.currentStep -= 1;
+                window.updateUI();
+            }
+        };
+
+        window.resetApp = () => {
+             appState = {
+                currentStep: 1,
+                transactionData: {
+                    donationType: '',
+                    amount: 0,
+                    paymentMethod: '',
+                    mobileNumber: '',
+                    pinVerified: false,
+                    transactionId: '',
+                    timestamp: null,
+                    status: 'Draft',
+                }
+            };
+            // Clear UI inputs
+            document.getElementById('custom-amount').value = '';
+            document.getElementById('verification-pin').value = '';
+            document.getElementById('mobile-number-input').value = '';
+            
+            window.updateUI();
+            window.showModal("অ্যাপ রিসেট", "অনুদান প্রক্রিয়াটি নতুন করে শুরু করা হয়েছে।");
+        };
+        
+        // --- INITIALIZATION ---
+        window.onload = () => {
+            window.updateUI();
+        };
+
+    </script>
+</body>
+</html>

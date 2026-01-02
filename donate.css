@@ -1,0 +1,477 @@
+
+:root {
+    --primary-color: #059669; /* Emerald-600 */
+    --primary-hover: #047857; /* Emerald-700 */
+    --secondary-color: #1d4ed8; /* Blue-700 */
+    --danger-color: #ef4444; /* Red-600 */
+    --error-color: #dc2626; /* Red-600 */
+    --border-radius: 0.75rem;
+    --bkash-color: #e82c73;
+    --nagad-color: #f6921e;
+}
+body {
+    font-family: 'Noto Sans Bengali', 'Inter', sans-serif;
+    background-color: #c0bbbb75;
+    margin: 0;
+    padding: 1rem;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* --- Main Container (Card) --- */
+#app-container {
+    width: 60%;
+    height: auto;
+    background: linear-gradient(180deg, rgba(4, 152, 165, 0.589), rgba(2, 230, 150, 0.529));
+    box-shadow: 0 0 25px -12px rgba(0, 0, 0, 0.25);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    border: 3px solid #181617;
+    display: block; 
+}
+
+
+h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #031611;
+    margin-bottom: 1.5rem;
+    text-align:center;
+    margin-top: -10px;;
+}
+h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 1rem;
+}
+.text-muted {
+    color: #7f889c; 
+    margin-bottom: 1.5rem;
+}
+
+/* --- Step Indicators --- */
+.step-flow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+}
+.step-indicator {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+.step-indicator:last-child {
+    flex: 0; 
+}
+.step-circle {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #d1d5db;
+    color: white;
+    font-weight: 700;
+    transition: background-color 0.3s, transform 0.3s;
+    flex-shrink: 0;
+}
+.step-circle.active {
+    background-color: var(--primary-color);
+    transform: scale(1.1);
+}
+.step-circle-completed {
+    background-color: #10b981 !important; /* Green-500 */
+}
+.step-connector {
+    flex: 1;
+    height: 4px;
+    background-color: #d1d5db;
+    transition: background-color 0.3s;
+    margin: 0 0.5rem;
+}
+.step-connector.completed {
+    background-color: var(--primary-color);
+}
+.step-flow .step-indicator:last-child .step-connector {
+    display: none;
+}
+
+/* --- Donation Options (Step 1 Grid) --- */
+.donation-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+@media (min-width: 768px) {
+    .donation-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+.donation-option {
+    padding: 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+}
+.donation-option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.donation-option.selected {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.5);
+    background-color: #f0fdf4;
+}
+.donation-option p {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 1.125rem;
+}
+
+/* --- Payment Method Options (Step 2) --- */
+.payment-method-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.method-option {
+    padding: 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    position: relative;
+}
+.method-option:hover {
+    transform: scale(1.02);
+}
+.method-option.selected {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.5);
+    background-color: #eff6ff; /* Blue-50 */
+}
+.bkash-logo { color: var(--bkash-color); font-size: 1.5rem; font-weight: 700; }
+.nagad-logo { color: var(--nagad-color); font-size: 1.5rem; font-weight: 700; }
+
+
+/* --- Forms and Inputs --- */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+input[type="number"], input[type="text"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 1px var(--primary-color);
+    outline: none;
+}
+#verification-pin, #mobile-number-input {
+    text-align: center;
+    font-size: 1.25rem;
+    letter-spacing: 0.15em;
+}
+.error-message {
+    color: var(--error-color);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* --- Buttons --- */
+.btn {
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    border: none;
+}
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--primary-hover);
+}
+.btn-secondary {
+    background-color: #d1d5db;
+    color: #374151;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.btn-secondary:hover:not(:disabled) {
+    background-color: #9ca3af;
+}
+.btn:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+    opacity: 0.7;
+    box-shadow: none;
+}
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+.button-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* --- Step 3 Summary & History --- */
+.summary-box {
+    background-color: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid #e5e7eb;
+}
+.summary-content p {
+    line-height: 1.5;
+    color: #4b5563;
+    margin-bottom: 0.75rem;
+}
+.summary-content strong {
+    font-weight: 700;
+    color: #1f2937;
+}
+.summary-status {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    justify-content: space-between;
+}
+.badge {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 9999px;
+    min-width: 80px;
+    text-align: center;
+}
+.badge-completed {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* --- Success Message (Step 3) --- */
+.success-box {
+    text-align: center;
+    padding: 2rem;
+    background-color: #d1fae5;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+}
+.success-icon {
+    width: 4rem;
+    height: 4rem;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+.success-box h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #065f46;
+    margin-bottom: 0.5rem;
+}
+.success-box p {
+    color: #966105;
+}
+
+/* --- Message Modal (replaces alert()) --- */
+#message-modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(17, 24, 39, 0.5);
+    z-index: 50;
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+}
+.modal-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 24rem;
+}
+.modal-footer {
+    overflow: hidden;
+    padding-top: 1rem;
+}
+.modal-footer button {
+    float: right;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+/* ==================== RESPONSIVE DESIGN FOR DONATE PAGE ==================== */
+
+/* MOBILE (0px - 640px) */
+@media (max-width: 640px) {
+    body {
+        padding: 0.5rem;
+        min-height: 100vh;
+    }
+    
+    #app-container {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #181617;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    h2 {
+        font-size: 1rem;
+    }
+    
+    .step-flow {
+        margin-bottom: 1.5rem;
+        padding: 0 0.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .step-circle {
+        width: 35px;
+        height: 35px;
+        font-size: 0.75rem;
+    }
+    
+    .step-connector {
+        height: 3px;
+        margin: 0 0.25rem;
+    }
+    
+    .donation-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+    
+    .donation-option {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    .payment-method-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .method-option {
+        padding: 0.75rem;
+    }
+    
+    input[type="number"], input[type="text"] {
+        padding: 0.5rem;
+        font-size: 1rem;
+    }
+    
+    .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+    
+    .button-group {
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+    }
+    
+    .button-right {
+        justify-content: center;
+    }
+    
+    .summary-box {
+        padding: 1rem;
+    }
+    
+    .modal-content {
+        width: 90%;
+    }
+}
+
+/* TABLET (641px - 1024px) */
+@media (min-width: 641px) and (max-width: 1024px) {
+    #app-container {
+        width: 85%;
+        padding: 1.25rem;
+    }
+    
+    h1 {
+        font-size: 1.75rem;
+    }
+    
+    .donation-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.9rem;
+    }
+    
+    .payment-method-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.9rem;
+    }
+    
+    .btn {
+        padding: 0.7rem 1.2rem;
+    }
+    
+    .button-group {
+        flex-direction: row;
+    }
+}
+
+/* LAPTOP & DESKTOP (1025px and above) */
+@media (min-width: 1025px) {
+    #app-container {
+        width: 60%;
+    }
+    
+    .donation-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .payment-method-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .button-group {
+        flex-direction: row;
+    }
+}

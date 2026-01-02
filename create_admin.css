@@ -1,0 +1,221 @@
+body{
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.home-btn{
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 12px 20px;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.home-btn:hover{
+    background: rgba(255,255,255,0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+.admin-page{
+    width: 85%;
+    max-width: 420px;
+    min-height: 280px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    padding: 12px 18px;
+    border: 1px solid rgba(255,255,255,0.5);
+}
+.H1{
+    text-align: center;
+    font-size: clamp(1.2em, 3.2vw, 1.6em);
+    color: #667eea;
+    margin: 0 0 6px 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #667eea;
+    font-weight: 700;
+}
+label{
+    font-size: 0.8em;
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-bottom: 1px;
+    margin-left: 0;
+}
+input{
+    font-size: 0.8em;
+    width: 100%;
+    padding: 5px 8px;
+    margin-bottom: 4px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+input:focus{
+    outline: none;
+    border-color: #667eea;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+button{
+    width: 100%;
+    height: 32px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    margin-top: 2px;
+    font-size: 0.95em;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+h4{
+    text-align: center;
+    color: #667eea;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 6px;
+    font-size: 0.78em;
+    transition: color 0.3s ease;
+}
+h4:hover{
+    color: #764ba2;
+    text-decoration: underline;
+}
+/* ==================== RESPONSIVE DESIGN FOR CREATE ADMIN PAGE ==================== */
+
+/* MOBILE (0px - 640px) */
+@media (max-width: 640px) {
+    body {
+        padding: 0;
+        margin: 0;
+    }
+    
+    .home-btn {
+        top: 10px;
+        left: 10px;
+        padding: 8px 12px;
+        font-size: 0.75rem;
+        border-radius: 8px;
+    }
+    
+    .admin-page {
+        width: 95%;
+        max-width: 100%;
+        min-height: auto;
+        padding: 10px 12px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: 50px;
+    }
+    
+    .H1 {
+        font-size: 1rem;
+        margin-bottom: 5px;
+        padding-bottom: 4px;
+        border-bottom: 1.5px solid #667eea;
+    }
+    
+    label {
+        font-size: 0.7rem;
+        margin-bottom: 1px;
+    }
+    
+    input {
+        font-size: 0.85rem;
+        padding: 4px 6px;
+        margin-bottom: 3px;
+    }
+    
+    button {
+        height: 32px;
+        font-size: 0.85rem;
+        margin-top: 3px;
+        padding: 6px;
+    }
+    
+    h4 {
+        font-size: 0.7rem;
+        margin-top: 6px;
+    }
+}
+
+/* TABLET (641px - 1024px) */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .home-btn {
+        top: 12px;
+        left: 12px;
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .admin-page {
+        width: 75%;
+        max-width: 420px;
+        padding: 15px 18px;
+    }
+    
+    .H1 {
+        font-size: 1.25rem;
+        margin-bottom: 8px;
+    }
+    
+    input {
+        font-size: 0.9rem;
+        padding: 6px 8px;
+        margin-bottom: 6px;
+    }
+    
+    button {
+        height: 36px;
+        font-size: 0.95rem;
+    }
+}
+
+/* LAPTOP & DESKTOP (1025px and above) */
+@media (min-width: 1025px) {
+    .home-btn {
+        top: 20px;
+        left: 20px;
+    }
+    
+    .admin-page {
+        width: 85%;
+        max-width: 420px;
+        padding: 12px 18px;
+    }
+    
+    input {
+        font-size: 0.8rem;
+        padding: 5px 8px;
+    }
+}
